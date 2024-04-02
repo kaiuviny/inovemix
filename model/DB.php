@@ -4,7 +4,13 @@ class DB{
     private $conn;
 
     public function getConnection() {
-        return new mysqli("localhost", "root", "", "mvc");
+        $this->conn =  new mysqli("127.0.0.1", "root", "", "mvc", "33306");
+        if($this->conn->connect_error){
+            die("Connection failed: " . $this->conn->connect_error);
+        }
+        else{
+            return $this->conn;
+        }
     }
 
     public function execReader($SQL){
@@ -15,8 +21,11 @@ class DB{
         return $this->conn->prepare($SQL);
     }
 
-    public function __destruct(){
+    public function conclose(){
         $this->conn->close();
     }
+    /*public function __destruct(){
+        $this->conn->close();
+    }*/
 }
 ?>

@@ -7,7 +7,7 @@
     <body>
         <header>
             <?php
-                echo "<h1>Retorno...</h1>";
+                echo "<h1>" . $_GET["msg"] . "</h1>";
             ?>
         </header>
         <article>
