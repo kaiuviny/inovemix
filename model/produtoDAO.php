@@ -1,16 +1,19 @@
 <?php
 class ProdutoDAO{
+    
     public function insert(ProdutoVO $value) {
-        $SQL = "INSERT INTO `produtos` (`nome`, `marca`, `preco`) VALUES(?, ?, ?)";
+        $SQL = "INSERT INTO `produtos` (`nome`, `marca`, `preco`) VALUES (?, ?, ?)";
+
+        $nome = $value->getNome();
+        $marca = $value->getMarca();
+        $preco = $value->getPreco();
+
         $DB  = new DB();
-
         $DB->getConnection();
+
         $pstm = $DB->execSQL($SQL);
-
-        $pstm->bind_param("s", $value->getNome());
-        $pstm->bind_param("s", $value->getMarca());
-        $pstm->bind_Param("s", $value->getPreco());
-
+        $pstm->bind_param("sss", $nome, $marca, $preco);
+        
         if ($pstm->execute())
             return true;
         else
@@ -19,16 +22,18 @@ class ProdutoDAO{
     }
 
     public function update(ProdutoVO $value) {
-        $SQL = "UPDATE `produtos` SET `nome` = ?, `marca` = ?, `preco` = ? WHERE `id` = ?";
+        $SQL = "UPDATE `produtos` SET `nome` = ?, `marca` = ?, `preco` = ? WHERE `id_produto` = ?";
+
+        $id     = $value->getId();
+        $nome   = $value->getNome();
+        $marca  = $value->getMarca();
+        $preco  = $value->getPreco();
+
         $DB  = new DB();
-
         $DB->getConnection();
+        
         $pstm = $DB->execSQL($SQL);
-
-        $pstm->bind_param("s", $value->getNome());
-        $pstm->bind_param("s", $value->getMarca());
-        $pstm->bind_param("s", $value->getPreco());
-        $pstm->bind_param("i", $value->getId());
+        $pstm->bind_param("isss", $id, $nome, $marca, $preco);
 
         if ($pstm->execute())
             return true;
@@ -37,17 +42,18 @@ class ProdutoDAO{
     }
 
     public function delete(ProdutoVO $value){
-        $SQL = "DELETE FROM `produtos` WHERE `id` = ?";
+        $SQL = "DELETE FROM `produtos` WHERE `id_produto` = ?";
+        $id_produto = $value->getId();
+
         $DB  = new DB();
-
         $DB->getConnection();
-        $pstm = $DB->execSQL($SQL);
 
-        $pstm->bind_param("i", $value->getId());
+        $pstm = $DB->execSQL($SQL);
+        $pstm->bind_param("i", $id_produto);
     }
 
     public function getById($id){
-        $SQL = "SELECT * FROM `produtos` WHERE  `id` = ". addslashes($id);
+        $SQL = "SELECT * FROM `produtos` WHERE `id_produto` = ". addslashes($id);
 
         $DB = new DB();
         $DB->getConnection();
@@ -56,7 +62,7 @@ class ProdutoDAO{
         $vo = new ProdutoVO();
 
         while($rs = $query->fetch_array(MYSQLI_ASSOC)){
-            $vo->setId($rs["id"]);
+            $vo->setId($rs["id_produto"]);
             $vo->setNome($rs["nome"]);
             $vo->setMarca($rs["marca"]);
             $vo->setPreco($rs["preco"]);
@@ -70,15 +76,14 @@ class ProdutoDAO{
         $DB->getConnection();
         $query = $DB->execReader("SELECT * FROM `produtos`;");
         return $query;
-        /*$vo = new ProdutoVO();
 
+        /*$vo = new ProdutoVO();
         while($rs = $query->fetch_object(MYSQLI_ASSOC)){
             $vo->setId($rs->id);
             $vo->setNome($rs->nome);
             $vo->setMarca($rs->marca);
             $vo->setPreco($rs->preco);
         }
-
         return $vo;*/
     }
 }

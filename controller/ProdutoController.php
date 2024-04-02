@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 include ("Model/ProdutoModel.php");
 include ("Model/ProdutoVO.php");
@@ -11,6 +12,7 @@ class ProdutoController{
     }
 
     public function salvar(){
+        
         $model = new ProdutoModel();
         $vo = new ProdutoVO();
         $vo->SetNome($_POST["txtNome"]);
@@ -24,11 +26,10 @@ class ProdutoController{
             $_SESSION["msg"] = "Erro ao cadastrar o produto.";
         }
 
-        header("Location: View/produtos/retorno.php");
-        //header("Location: ../View/produtos/retorno.php");
+        header("Location: View/produtos/retorno.php?msg=".$_SESSION["msg"]);
     }
 
-    public function update(){
+    public function atualizar(){
         $model = new ProdutoModel();
         $vo = new ProdutoVO();
         $vo->setId($_POST["txtId"]);
@@ -43,13 +44,12 @@ class ProdutoController{
             $_SESSION["msg"] = "Erro ao atualizar o produto.";
         }
 
-        header("Location: View/produtos/retorno.php");
+        //header("Location: View/produtos/retorno.php?msg=".$_SESSION["msg"]);
     }
 
     public function novo(){
         include("View/produtos/insert.php");
-        //header("Location: View/produtos/insert.php");
-        //header("Location: ../View/produtos/insert.php");
+        //include("Location: ../View/produtos/insert.php");
     }
 
     public function editar(){
@@ -61,7 +61,7 @@ class ProdutoController{
         $_SESSION["marca"] = $vo->getMarca();
         $_SESSION["preco"] = $vo->getPreco();
 
-        header("Location: View/produtos/insert.php");
+        include("View/produtos/edit.php");
     }
 
     public function listar(){

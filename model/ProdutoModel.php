@@ -1,39 +1,41 @@
 <?php
 class ProdutoModel{
-    //Encapsulando metodos DAO
+    //Encapsulando metodos DAO & Regras de Negocios
 
     public function insertModel(ProdutoVO $value){
-        $prod = new ProdutoDAO();
+        $dao = new ProdutoDAO();
+        //regras de negócios
         if($value->getPreco() == "0"){
             $value->SetPreco("10.90");
         }
 
-        return $prod->insert($value);
+        return $dao->insert($value);
     }
 
     public function deleteModel(ProdutoVO $value){
-        $prod = new ProdutoDAO();
-        return $prod->delete($value);
+        $dao = new ProdutoDAO();
+        return $dao->delete($value);
     }
 
     public function updateModel(ProdutoVO $value){
-        $prod = new ProdutoDAO();
-        return $prod->update($value);
+        //regra de negócios, onde tiver , troco por . (padrao do mysql) e removo o R$ 
+        $value->setPreco(number_format(str_replace("R$ ","",$value->getPreco()), 2, '.', ','));
+        $dao = new ProdutoDAO();
+        return $dao->update($value);
     }
 
     public function getByIdModel($id){
-        $prod = new ProdutoDAO();
-        $vo = $prod->getById($id);
+        $dao = new ProdutoDAO();
+        $prodDAO = $dao->getById($id);
+        //regras de negócios
+        $prodDAO->setPreco("R$ ".number_format($prodDAO->getPreco(), 2, ',', '.'));
 
-        $value = new ProdutoVO;
-        $value->setPreco("R$ ". number_format($vo->getPreco(), 2, ',', '.'));
-
-        return $vo;
+        return $prodDAO;
     }
 
     public function getAllModel(){
-        $prod = new ProdutoDAO();
-        return $prod->getAll();
+        $dao = new ProdutoDAO();
+        return $dao->getAll();
     }
 }
 ?>
