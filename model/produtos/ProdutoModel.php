@@ -19,7 +19,8 @@ class ProdutoModel{
 
     public function updateModel(ProdutoVO $value){
         //regra de negócios, onde tiver , troco por . (padrao do mysql) e removo o R$ 
-        $value->setPreco(number_format(str_replace("R$ ","",$value->getPreco()), 2, '.', ','));
+        $value->setPreco(str_replace(',', '.', str_replace("R$ ","",$value->getPreco())));
+
         $dao = new ProdutoDAO();
         return $dao->update($value);
     }
@@ -28,6 +29,7 @@ class ProdutoModel{
         $dao = new ProdutoDAO();
         $prodDAO = $dao->getById($id);
         //regras de negócios
+        //if($_GET["Action"] != "editar")
         $prodDAO->setPreco("R$ ".number_format($prodDAO->getPreco(), 2, ',', '.'));
 
         return $prodDAO;
