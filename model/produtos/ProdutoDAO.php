@@ -33,7 +33,7 @@ class ProdutoDAO{
         $DB->getConnection();
         
         $pstm = $DB->execSQL($SQL);
-        $pstm->bind_param("isss", $id, $nome, $marca, $preco);
+        $pstm->bind_param("sssi", $nome, $marca, $preco, $id);
 
         if ($pstm->execute())
             return true;
