@@ -28,6 +28,7 @@
             ?>
         </header>
         <article>
+            <a href="?Controller=Produto&Action=listar">|<< Voltar</a>
 
         </article>
         <section>
