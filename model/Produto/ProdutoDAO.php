@@ -1,5 +1,6 @@
 <?php
-class ProdutoDAO{
+include "iProdutoDAO.php";
+class ProdutoDAO implements iProdutoDAO{
     
     public function insert(ProdutoVO $value) {
         $SQL = "INSERT INTO `produtos` (`nome`, `marca`, `preco`) VALUES (?, ?, ?)";
@@ -75,16 +76,11 @@ class ProdutoDAO{
         $DB = new DB();
         $DB->getConnection();
         $query = $DB->execReader("SELECT * FROM `produtos`;");
-        return $query;
-
-        /*$vo = new ProdutoVO();
-        while($rs = $query->fetch_object(MYSQLI_ASSOC)){
-            $vo->setId($rs->id);
-            $vo->setNome($rs->nome);
-            $vo->setMarca($rs->marca);
-            $vo->setPreco($rs->preco);
+        $array = array();
+        while($rs = $query->fetch_array()){
+            $array[] = array($rs["id_produto"], $rs["nome"], $rs["marca"], "R$ ".number_format($rs["preco"], 2, ',', '.'), $rs["datetime_create"], $rs["user_update"], $rs["last_update"]);
         }
-        return $vo;*/
+        return $array;
     }
 }
 
