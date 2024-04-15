@@ -1,6 +1,11 @@
 <?php
     session_start();
 
+    include_once ("model/DB.php");
+    include_once ("model/Login/LoginVO.php");
+    include_once ("model/Login/LoginDAO.php");
+    include_once ("model/Login/LoginModel.php");
+    
     class LoginController{
         public function LoginController(){}
 
@@ -8,13 +13,25 @@
 
             $_SESSION["login"] = $_POST["txtLogin"];
             $_SESSION["password"] = $_POST["txtPassword"];
-            //if($model->getLoginModel($vo)){ 
-                //$_SESSION["msg"] = "Logado com Sucesso...";
-                //include ("view/frenteCaixa");
-            //else{
-            $_SESSION["msg"] = "Logando! Aguarde...";
-            include ("view/Login/LoginRetorno.php");
-            //}
+
+            $vo = new LoginVO();
+            $vo->setLogin($_POST["txtLogin"]);
+            $vo->setPassword($_POST["txtPassword"]);
+
+           
+
+           $model = new LoginModel();
+
+            if($data = $model->getLoginModel($vo)){ 
+                $_SESSION["msg"] = "Logado kaiuviny com Sucesso...";
+                $_SESSION["data"] = $data;
+                header("Location: ?Controller=produto&Action=listar");
+            }
+            else{
+
+                $_SESSION["msg"] = "Inválido! Erro ao logar, tente novamente";
+                include ("view/Login/LoginRetorno.php");
+            }
         }
 
         public function esqueciaSenha(){

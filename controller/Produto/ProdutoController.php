@@ -2,10 +2,10 @@
 
     session_start();
 
-    include_once ("model/Produto/ProdutoModel.php");
+    include_once ("model/DB.php");
     include_once ("model/Produto/ProdutoVO.php");
     include_once ("model/Produto/ProdutoDAO.php");
-    include_once ("model/DB.php");
+    include_once ("model/Produto/ProdutoModel.php");
 
     class ProdutoController{
         public function ProdutoController(){}
@@ -73,23 +73,26 @@
             include("view/Produto/edit.php");
         }
 
-       /* public function listar(){
+        public function deletar(){
             $model = new ProdutoModel();
-            $vo = $model->getAllModel();
+            $vo = $model->getByIdModel($_GET["id"]);
 
-            $_SESSION["id"] = $vo->getId();
-            $_SESSION["nome"] = $vo->getNome();
-            $_SESSION["marca"] = $vo->getMarca();
-            $_SESSION["preco"] = $vo->getPreco();
+            if($model->deleteModel($vo)){
+                $_SESSION["msg"] = "Produto n.".$vo->getId()." - [".$vo->getNome()."] deletado com sucesso!";
+                header("Location: ?Controller=produto&Action=listar");
+            }
+            else{
+                $_SESSION["msg"] = "Nao foi possivel deletar o Produto n.".$vo->getId()." [".$vo->getNome()."]. Tente novamente!";
+                header("Location: ?Controller=produto&Action=listar");
+            }
 
-            header("Location: View/Produto/list.php");
-        }*/
+            
+        }
 
        // public function getAll(){
         public function listar(){
             $model = new ProdutoModel();
             $_SESSION["data"] = $model->getAllModel();
-           // header("Location: View/Produto/list.php");
             include ("View/Produto/list.php");
         }
     }

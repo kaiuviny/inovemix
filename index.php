@@ -19,6 +19,9 @@ if(isset($_GET["Controller"])){
     
 }
 else {
+    session_destroy();
+    $_SESSION["msg"] = "";
+    $_SESSION["data"] = "";
     include("index.html");
 }
 
