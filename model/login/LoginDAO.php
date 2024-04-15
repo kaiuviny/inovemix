@@ -23,7 +23,6 @@ class LoginDAO implements iLoginDAO{
         }
         return $vo;
 
-
     }
 
     public function requestRegister(LoginVO $value){
