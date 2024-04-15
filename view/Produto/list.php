@@ -8,6 +8,7 @@
         <header>
         </header>
         <article>
+            <?php if($_SESSION["msg"]){ echo "<h1>".$_SESSION["msg"]."</h1>";} ?>
             <table border="1" width="100%">
                 <thead><h2>LISTAGEM DE PRODUTOS</h2></thead>
                 <tr>
@@ -66,16 +67,16 @@
 
                 });*/
         function editar(id){
-            if(window.confirm("Deseja editar o produto c/ código: "+id+"?")){
-                alert("Editando produto nª "+ id);
+            //if(window.confirm("Deseja editar o produto c/ código: "+id+"?")){    
                 let url = "http://192.168.1.12:8090/inovemix/?Controller=Produto&Action=editar&id="+id;
                 window.location = url;
-            }
+            //}
         }
         
         function deletar(id){
             if(window.confirm("Deseja realmente excluir o produto de código: "+id+"?")){
-                alert("Excluindo produto nª "+ id)
+                let url = "http://192.168.1.12:8090/inovemix/?Controller=Produto&Action=deletar&id="+id;
+                window.location = url;
             }
         }
 

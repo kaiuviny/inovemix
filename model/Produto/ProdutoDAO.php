@@ -51,6 +51,13 @@ class ProdutoDAO implements iProdutoDAO{
 
         $pstm = $DB->execSQL($SQL);
         $pstm->bind_param("i", $id_produto);
+
+        if($pstm->execute()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public function getById($id){

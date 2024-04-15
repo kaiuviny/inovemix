@@ -12,6 +12,7 @@
                 <h3>Usuario ". $_SESSION["login"] . " e Senha ". $_SESSION["password"] ." " . $_SESSION["msg"] . "!!!</h3>
                 ";
             ?>
+            <a href="http://192.168.1.12:8090/inovemix/"> |<< Voltar</a>
         </header>
         <article>
 
