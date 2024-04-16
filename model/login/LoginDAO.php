@@ -9,7 +9,13 @@ class LoginDAO implements iLoginDAO{
         $password = $value->getPassword();
 
         //$sql = "SELECT * FROM `login` WHERE `login` = '$login' AND `password` = '$password';";
-        $sql = "SELECT * FROM `login` WHERE `login` = ? AND `password` = ?;";
+        $sql = "SELECT 
+                    `id_login`, `login`, `password`, `employee_id`, `job_id`
+                FROM
+                    mvc.login AS l
+                INNER JOIN
+                    employee AS e ON l.employee_id = e.id_employee
+                WHERE `login` = ? AND `password` = ?;";
 
         $db = new DB();
         $db->getConnection();
@@ -21,14 +27,18 @@ class LoginDAO implements iLoginDAO{
         if($result = $pstm->get_result()){
            // echo "<h1> Num rows: ".$result->num_rows."</h1>";
            if($result->num_rows>0){
-            $vo = new LoginVO;
-            while($rs = $result->fetch_array(MYSQLI_ASSOC)){
-                $vo->setId_login($rs["id_login"]);
-                $vo->setId_login($rs["login"]);
-                $vo->setId_login($rs["password"]);
-                $vo->setId_login($rs["employee_id"]);
-            }
-            return $vo;
+                $vo = new LoginVO;
+                $rs = $result->fetch_array(MYSQLI_ASSOC);
+                $vo->setJob_id($rs["job_id"]);
+                return $rs["job_id"];
+                /*while($rs = $result->fetch_array(MYSQLI_ASSOC)){
+                    $vo->setId_login($rs["id_login"]);
+                    $vo->setLogin($rs["login"]);
+                    $vo->setPassword($rs["password"]);
+                    $vo->setEmployee_id($rs["employee_id"]);
+                    $vo->setJob_id($rs["job_id"]);
+                }
+                return $vo;*/
            }
            else{
             return false;

@@ -47,12 +47,10 @@
             <div style="text-align: center;">
                 <a href="?Controller=Produto&Action=novo"><button id="btnNovo" style="padding: 20px;">Novo Produto</button></a>
             </div>
-            
-
         </article>
         <section>
             <aside>
-
+                <a href="?"> |<< Voltar </a>
             </aside>
             <div>
                 
