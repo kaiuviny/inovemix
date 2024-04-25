@@ -19,15 +19,15 @@
                 if($data = $model->checkUserLevelModel($vo)){
                     switch ($data){
                         case 0:
-                            include ("view/Menu/menu0.php");
+                            include ("view/Menu/menuGerencia.php");
                             break;
                         
                         case 1:
-                            include ("view/Menu/menu1.php");
+                            include ("view/Menu/menuCaixaFrente.php");
                             break;
 
                         case 2:
-                            include ("view/Menu/menu2.php");
+                            include ("view/Menu/menuCaixaOperacional.php");
                             break;
                         default:
                             echo "<h1>Nenhum Menu liberado para o acesso  com o nível $data!</h1>";     
