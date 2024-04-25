@@ -4,6 +4,7 @@ class LoginVO{
     private $login;
     private $password;
     private $employee_id;
+    private $job_id;
 
     public function getId_login(){
         return $this->id_login;
@@ -31,6 +32,13 @@ class LoginVO{
     }
     public function setEmployee_id($employee_id){
         $this->employee_id = $employee_id;
+    }
+
+    public function getJob_id(){
+        return $this->job_id;
+    }
+    public function setJob_id($job_id){
+        $this->job_id = $job_id;
     }
  
 }

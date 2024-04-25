@@ -18,14 +18,12 @@
             $vo->setLogin($_POST["txtLogin"]);
             $vo->setPassword($_POST["txtPassword"]);
 
-           
-
            $model = new LoginModel();
 
             if($data = $model->getLoginModel($vo)){ 
                 $_SESSION["msg"] = "Logado kaiuviny com Sucesso...";
-                $_SESSION["data"] = $data;
-                header("Location: ?Controller=produto&Action=listar");
+                //$_SESSION["data"] = $data;
+                header("Location: ?Controller=Menu&Action=verificaNivelUsuario&job_id=".$data);
             }
             else{
 
